@@ -4,12 +4,10 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-    position: relative; /* For background fix with pseudo-element */
-    z-index: 0;
+    position: relative; /* For static background container */
     color: #333;
   }
   
-  /* Fixed background using pseudo-element */
   body::before {
     content: '';
     position: fixed;
@@ -19,7 +17,8 @@ body {
     height: 100%;
     background: url('images/background.webp') no-repeat center center;
     background-size: cover;
-    z-index: -1; /* Ensures it stays behind content */
+    z-index: -1; /* Keep background behind content */
+    pointer-events: none; /* Prevent any interaction with the background */
   }
   
   header {
