@@ -50,10 +50,7 @@ header {
   padding: 20px 0;
 }
 
-/* 
-  Logo & Title 
-  - Stacked on mobile, centered
-*/
+/* Logo & Title - Stacked on mobile, centered */
 .header-top {
   display: flex;
   flex-direction: column;
@@ -73,10 +70,7 @@ header h1 {
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
-/* 
-  Two buttons
-  - Stacked & centered on mobile
-*/
+/* Two buttons - Stacked & centered on mobile */
 .header-app-links {
   display: flex;
   flex-direction: column;
@@ -102,12 +96,7 @@ header h1 {
   background-color: #ed6d3f; /* Slightly darker coral */
 }
 
-/* 
-  On larger screens:
-  - Place logo & title side by side, 
-  - Place app links side by side, 
-  - Keep them all centered.
-*/
+/* On larger screens => side-by-side layout */
 @media (min-width: 768px) {
   .header-top {
     flex-direction: row;
@@ -146,6 +135,47 @@ header h1 {
 #intro h2 {
   font-size: 2em;
   margin-bottom: 10px;
+}
+
+/* -----------------------
+   Scroll Prompt
+------------------------ */
+.scroll-prompt {
+  margin: 20px auto;
+  text-align: center;
+  /* 
+    Semi-transparent background behind the text/arrow.
+    Adjust opacity or color to your liking.
+  */
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.scroll-prompt .prompt-text {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  margin-bottom: 5px;
+}
+
+.arrow-down {
+  font-size: 1.5em;
+  color: #fff;
+  animation: bounceArrow 1s infinite alternate;
+  cursor: default;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+@keyframes bounceArrow {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
 }
 
 /* -----------------------
