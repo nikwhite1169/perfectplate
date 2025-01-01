@@ -16,7 +16,7 @@ body {
   text-align: center;
   color: #333;
 
-  /* Restore your background image */
+  /* Background image as requested */
   background: url('images/background.webp') no-repeat center center fixed;
   background-size: cover;
 
@@ -29,14 +29,25 @@ h1, h2, h3 {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Simple fade-in animation (triggered by JS) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.appear {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* -----------------------
    Header Section
 ------------------------ */
 header {
-  background-color: rgba(76, 175, 80, 0.9);
+  /* Simple green-to-blue gradient for more personality */
+  background: linear-gradient(90deg, rgba(76,175,80,1) 0%, rgba(68,167,227,1) 100%);
   color: white;
   padding: 20px 0;
-  text-align: center;
 }
 
 /* 
@@ -47,8 +58,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center; 
-  justify-content: center;
   gap: 10px;
+  justify-content: center;
 }
 
 .logo {
@@ -59,6 +70,7 @@ header {
 header h1 {
   margin: 0;
   font-size: 2em; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 /* 
@@ -69,24 +81,25 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center; 
-  justify-content: center;
   gap: 10px;
   margin-top: 15px;
+  justify-content: center;
 }
 
 /* Actual link button styling */
 .app-store-link {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #ff7f50; /* Coral accent color */
   border-radius: 5px;
   color: #fff;
   font-size: 1em;
   text-decoration: none;
   font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 .app-store-link:hover {
-  background-color: #0056b3;
+  background-color: #ed6d3f; /* Slightly darker coral */
 }
 
 /* 
@@ -130,6 +143,11 @@ header h1 {
   display: inline-block;
 }
 
+#intro h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
 /* -----------------------
    Features Section
 ------------------------ */
@@ -144,22 +162,34 @@ header h1 {
 
 #features h2 {
   font-size: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
+/* Feature Cards (icon + text) */
 .feature {
-  margin: 20px 0;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.feature-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
 }
 
 .feature h3 {
   font-size: 1.5em;
   color: #4caf50;
   margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .feature p {
   font-size: 1.1em;
   margin-top: 10px;
+  max-width: 600px;
 }
 
 /* “Coming Soon” styling */
@@ -181,6 +211,11 @@ header h1 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+#how-it-works h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
 .steps {
   list-style: none;
   text-align: left;
@@ -193,25 +228,27 @@ header h1 {
   margin: 15px 0;
   display: flex;
   align-items: baseline;
+  font-size: 1.1em;
 }
 
 .steps li strong {
   min-width: 100px;
   text-align: left;
   font-weight: bold;
+  color: #4caf50;
 }
 
 .steps li span {
   flex: 1;
   text-align: left;
-  font-size: 1.1em;
 }
 
 /* -----------------------
    CTA Section
 ------------------------ */
 #cta {
-  background-color: rgba(76, 175, 80, 0.9);
+  /* A teal-to-green gradient for the CTA area */
+  background: linear-gradient(90deg, rgba(0,178,155,1) 0%, rgba(76,175,80,1) 100%);
   color: white;
   padding: 40px 0;
   margin: 30px 0 0 0;
@@ -234,16 +271,17 @@ header h1 {
 .cta-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: white;
-  color: #4caf50;
+  background-color: #ff7f50; /* Coral accent again */
+  color: #fff;
   text-decoration: none;
   border-radius: 5px;
   font-size: 1.2em;
   margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-  background-color: #e8e8e8;
+  background-color: #ed6d3f;
 }
 
 /* -----------------------
@@ -254,4 +292,7 @@ footer {
   background-color: #222;
   color: white;
   padding: 20px 0;
+  font-size: 0.9em;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
