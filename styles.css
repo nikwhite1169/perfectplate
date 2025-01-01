@@ -1,174 +1,190 @@
 /* Global Styles */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: #333;
-    background: url('images/background.webp') no-repeat center center fixed;
-    background-size: cover; /* Ensure the background covers the viewport */
-  }
-  
-  /* Content Styling */
-  header {
-    background-color: rgba(76, 175, 80, 0.9);
-    color: white;
-    padding: 20px 0;
-  }
-  
-  header .logo {
-    width: 100px;
-    margin-bottom: 10px;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    margin: 10px 0;
-  }
-  
-  p {
-    font-size: 1.1em;
-    margin: 10px 0;
-  }
-  
-  /* Intro Section */
-  #intro {
-    padding: 30px 20px;
-    margin-bottom: 20px;
-  }
-  
-  .text-background {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    display: inline-block;
-  }
-  
-  /* Features Section */
-  #features {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 50px 20px;
-    margin: 30px auto;
-    border-radius: 10px;
-    max-width: 800px;
-  }
-  
-  .feature {
-    margin: 20px 0;
-  }
-  
-  h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-  
-  h3 {
-    font-size: 1.5em;
-    color: #4caf50;
-  }
-  
-  .feature p {
-    font-size: 1.1em;
-    margin-top: 10px;
-  }
-  
-  /* Coming Soon Styling */
-  .coming-soon {
-    font-size: 0.8em;
-    color: #f39c12;
-    font-weight: bold;
-  }
-  
-  /* How It Works Section */
-  #how-it-works {
-    background: rgba(240, 240, 240, 0.9);
-    padding: 50px 20px;
-    margin: 30px auto;
-    border-radius: 10px;
-    max-width: 800px;
-  }
-  
-  .steps {
-    text-align: left;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    max-width: 600px;
-  }
-  
-  .steps li {
-    margin: 15px 0;
-    display: flex;
-    align-items: baseline;
-  }
-  
-  .steps li strong {
-    min-width: 100px;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  .steps li span {
-    flex: 1;
-    text-align: left;
-    font-size: 1.1em;
-  }
-  
-  /* Call to Action Section */
-  #cta {
-    background-color: rgba(76, 175, 80, 0.9);
-    color: white;
-    padding: 40px 0;
-    margin: 30px 0 0 0;
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  
-  .cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: white;
-    color: #4caf50;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    margin-top: 20px;
-  }
-  
-  .cta-button:hover {
-    background-color: #e8e8e8;
-  }
-  
-  /* App Store Links */
-  .app-links {
-    margin-top: 20px;
-  }
-  
-  .app-store-link {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-  }
-  
-  .app-store-link:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Footer */
-  footer {
-    margin-top: 20px;
-    background-color: #222;
-    color: white;
-    padding: 20px 0;
-  }
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  color: #333;
+  background: url('images/background.webp') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  max-width: 100%;
+}
+
+/* Header Section */
+header {
+  background-color: rgba(76, 175, 80, 0.9);
+  color: white;
+  padding: 20px 0;
+  text-align: center; /* Keep everything centered */
+}
+
+/* Top row with logo + main heading */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Space under heading */
+}
+
+/* Logo */
+header .logo {
+  width: 100px;
+  margin-right: 20px; /* Space between logo and title */
+}
+
+/* Main title */
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif; /* Use the modern font */
+}
+
+/* Separate row for app download links */
+.header-app-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Spacing between links */
+}
+
+/* Download links */
+.app-store-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+
+.app-store-link:hover {
+  background-color: #0056b3;
+}
+
+/* Intro Section */
+#intro {
+  padding: 30px 20px;
+  margin-bottom: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-background {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Features Section */
+#features {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 50px 20px;
+  margin: 30px auto;
+  border-radius: 10px;
+  max-width: 800px;
+}
+
+.feature {
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #4caf50;
+}
+
+.feature p {
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+/* Coming Soon Styling */
+.coming-soon {
+  font-size: 0.8em;
+  color: #f39c12;
+  font-weight: bold;
+}
+
+/* How It Works Section */
+#how-it-works {
+  background: rgba(240, 240, 240, 0.9);
+  padding: 50px 20px;
+  margin: 30px auto;
+  border-radius: 10px;
+  max-width: 800px;
+}
+
+.steps {
+  text-align: left;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  max-width: 600px;
+}
+
+.steps li {
+  margin: 15px 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.steps li strong {
+  min-width: 100px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.steps li span {
+  flex: 1;
+  text-align: left;
+  font-size: 1.1em;
+}
+
+/* Call to Action Section */
+#cta {
+  background-color: rgba(76, 175, 80, 0.9);
+  color: white;
+  padding: 40px 0;
+  margin: 30px 0 0 0;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: #4caf50;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+.cta-button:hover {
+  background-color: #e8e8e8;
+}
+
+/* Footer */
+footer {
+  margin-top: 20px;
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+}
