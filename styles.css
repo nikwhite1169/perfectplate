@@ -33,14 +33,14 @@ header {
 /*
   Default (mobile) layout:
   - Logo & title stack, centered.
-  - Buttons are stacked, centered below title.
+  - Buttons also stacked, centered below.
 */
 .header-top {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Space between logo & title */
+  gap: 10px; /* space between logo & title */
 }
 
 header .logo {
@@ -53,20 +53,43 @@ header h1 {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* The two download links, centered & stacked on mobile */
+/* Stacked on mobile, with spacing so they're not touching. */
 .header-app-links {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   margin-top: 20px;
 }
 
 /* 
+  Provide vertical spacing on mobile. 
+  We'll also adjust on desktop in the media query.
+*/
+.app-store-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin-bottom: 10px; /* vertical spacing */
+}
+
+/* Remove margin-bottom on the very last one in the stack if you want */
+.app-store-link:last-child {
+  margin-bottom: 0;
+}
+
+.app-store-link:hover {
+  background-color: #0056b3;
+}
+
+/* 
   Larger screens (>=768px):
-  - Logo & title side-by-side, still centered.
-  - Buttons side by side, also centered.
+  - Logo & title side-by-side, centered.
+  - Buttons side by side, also centered, with horizontal spacing.
 */
 @media (min-width: 768px) {
   .header-top {
@@ -79,22 +102,12 @@ header h1 {
 
   .header-app-links {
     flex-direction: row;
+    gap: 20px; /* horizontal gap between the two buttons */
   }
-}
 
-/* Download links styling */
-.app-store-link {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 1.2em;
-}
-
-.app-store-link:hover {
-  background-color: #0056b3;
+  .app-store-link {
+    margin-bottom: 0; /* remove vertical margin in row layout */
+  }
 }
 
 /* -----------------------
