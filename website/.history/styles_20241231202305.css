@@ -1,0 +1,328 @@
+/* -----------------------
+   Global Styles
+------------------------ */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  /* Use Open Sans for body text */
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  color: #333;
+
+  /* Background image as requested */
+  background: url('images/background.webp') no-repeat center center fixed;
+  background-size: cover;
+
+  position: relative;
+  max-width: 100%;
+}
+
+/* Use Montserrat for headings */
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Simple fade-in animation (triggered by JS) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.appear {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -----------------------
+   Header Section
+------------------------ */
+header {
+  /* Simple green-to-blue gradient for more personality */
+  background: linear-gradient(90deg, rgba(76,175,80,1) 0%, rgba(68,167,227,1) 100%);
+  color: white;
+  padding: 20px 0;
+}
+
+/* Logo & Title - Stacked on mobile, centered */
+.header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+  justify-content: center;
+}
+
+.logo {
+  width: 100px;
+  display: block;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Two buttons - Stacked & centered on mobile */
+.header-app-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+/* Actual link button styling */
+.app-store-link {
+  padding: 10px 20px;
+  background-color: #ff7f50; /* Coral accent color */
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1em;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.app-store-link:hover {
+  background-color: #ed6d3f; /* Slightly darker coral */
+}
+
+/* On larger screens => side-by-side layout */
+@media (min-width: 768px) {
+  .header-top {
+    flex-direction: row;
+  }
+
+  header h1 {
+    font-size: 2.5em;
+  }
+
+  .header-app-links {
+    flex-direction: row;
+  }
+}
+
+/* -----------------------
+   Intro Section
+------------------------ */
+#intro {
+  max-width: 800px;
+  margin: 30px auto 20px;
+  padding: 30px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+
+  /* Subtle box shadow for better contrast */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.text-background {
+  background: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+#intro h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+/* -----------------------
+   Scroll Prompt
+------------------------ */
+.scroll-prompt {
+  margin: 20px auto;
+  text-align: center;
+  /* 
+    Semi-transparent background behind the text/arrow.
+    Adjust opacity or color to your liking.
+  */
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.scroll-prompt .prompt-text {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  margin-bottom: 5px;
+}
+
+.arrow-down {
+  font-size: 1.5em;
+  color: #fff;
+  animation: bounceArrow 1s infinite alternate;
+  cursor: default;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+@keyframes bounceArrow {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+/* -----------------------
+   Features Section
+------------------------ */
+#features {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#features h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Feature Cards (icon + text) */
+.feature {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.feature-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 1.5em;
+  color: #4caf50;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.feature p {
+  font-size: 1.1em;
+  margin-top: 10px;
+  max-width: 600px;
+}
+
+/* “Coming Soon” styling */
+.coming-soon {
+  font-size: 0.8em;
+  color: #f39c12;
+  font-weight: bold;
+}
+
+/* -----------------------
+   How It Works
+------------------------ */
+#how-it-works {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#how-it-works h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.steps {
+  list-style: none;
+  text-align: left;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 600px;
+}
+
+.steps li {
+  margin: 15px 0;
+  display: flex;
+  align-items: baseline;
+  font-size: 1.1em;
+}
+
+.steps li strong {
+  min-width: 100px;
+  text-align: left;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.steps li span {
+  flex: 1;
+  text-align: left;
+}
+
+/* -----------------------
+   CTA Section
+------------------------ */
+#cta {
+  /* A teal-to-green gradient for the CTA area */
+  background: linear-gradient(90deg, rgba(0,178,155,1) 0%, rgba(76,175,80,1) 100%);
+  color: white;
+  padding: 40px 0;
+  margin: 30px 0 0 0;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#cta h2 {
+  font-size: 2em;
+  margin: 0 0 10px;
+}
+
+#cta p {
+  font-size: 1.1em;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff7f50; /* Coral accent again */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #ed6d3f;
+}
+
+/* -----------------------
+   Footer
+------------------------ */
+footer {
+  margin-top: 20px;
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+  font-size: 0.9em;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}

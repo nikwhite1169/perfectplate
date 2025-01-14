@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PerfectPlate: Start Your Free 3-Day Trial</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src="images/logo.png" alt="PerfectPlate Logo" class="logo" />
+      <h1>PerfectPlate: Start Your Free 3-Day Trial</h1>
+    </div>
+  </header>
+
+  <section id="signup">
+    <div class="text-background">
+      <h2>Join PerfectPlate Today!</h2>
+      <p>PerfectPlate gives you personalized meal recommendations tailored to your goals. Start your free trial today and discover the perfect plate for your lifestyle!</p>
+      
+      <form id="signup-form" action="/process-payment" method="POST">
+        <h3>Subscription Options:</h3>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="subscription" value="monthly" checked />
+            Monthly: $7.99/month
+          </label>
+          <label>
+            <input type="radio" name="subscription" value="yearly" />
+            Yearly: $72.99/year (Save 25%)
+          </label>
+        </div>
+
+        <h3>Create Account:</h3>
+        <!-- Social Login Buttons -->
+        <div class="social-login">
+          <button class="cta-button">Continue with Google</button>
+          <button class="cta-button">Continue with Facebook</button>
+        </div>
+
+        <p>or</p>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email Address" />
+          <span id="email-error" class="error-message"></span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group password-group">
+            <label class="hint">
+            Password must be at least 8 characters and include uppercase, lowercase, a number, and a symbol.
+            </label>
+            <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter Password" />
+            <span class="toggle-password" tabindex="0">👁</span>
+        </div>
+            <span id="password-error" class="error-message"></span>
+        </div>
+        
+        <!-- Confirm Password Field -->
+        <div class="form-group password-group">
+            <div class="password-wrapper">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" />
+            <span class="toggle-password">👁</span>
+            </div>
+            <span id="confirm-password-error" class="error-message"></span>
+        </div>
+              
+        <!-- Payment Information -->
+        <h3>Payment Information:</h3>
+        <div class="form-group">
+          <input type="text" id="card-number" placeholder="Card Number" />
+          <span id="card-number-error" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)" />
+          <span id="expiry-date-error" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <input type="text" id="cvc" placeholder="CVC" />
+          <span id="cvc-error" class="error-message"></span>
+        </div>
+
+        <!-- Start Free Trial Button -->
+        <button id="submitButton" class="cta-button disabled" disabled>Start Free Trial</button>
+    </form>
+    </div>
+  </section>
+
+  <section id="confirmation" class="hidden">
+    <div class="text-background">
+      <h2>Thank you for subscribing!</h2>
+      <p>Download the PerfectPlate app to begin your journey:</p>
+      <a href="https://www.apple.com/app-store/" class="cta-button">Download for iOS</a>
+      <a href="https://play.google.com/store" class="cta-button">Download for Android</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
+    <a href="privacy-policy.html">Privacy Policy</a> | 
+    <a href="terms-of-service.html">Terms of Service</a> | 
+    <a href="faq.html">FAQ</a>
+  </footer>
+
+  <script>
+    const formState = {
+      email: false,
+      password: false,
+      verifyPassword: false,
+      cardNumber: false,
+      expiryDate: false,
+      cvc: false
+    };
+
+    function showError(field, message) {
+  const fieldElement = document.getElementById(field);
+  const hintElement = document.getElementById(`${field}-hint`);
+  const errorElement = document.getElementById(`${field}-error`);
+
+  if (hintElement) {
+    hintElement.style.color = "red";
+  } else {
+    errorElement.textContent = message;
+    errorElement.style.color = "red";
+  }
+
+  fieldElement.classList.remove("valid");
+
+  // Remove existing checkmark if present
+  const checkMark = fieldElement.parentNode.querySelector(".checkmark");
+  if (checkMark) {
+    checkMark.remove();
+  }
+}
+
+    function showSuccess(field) {
+      const fieldElement = document.getElementById(field);
+      const hintElement = document.getElementById(`${field}-hint`);
+      const errorElement = document.getElementById(`${field}-error`);
+
+      if (hintElement) {
+        hintElement.style.color = "black";
+      } else {
+        errorElement.textContent = "";
+      }
+
+      fieldElement.classList.add("valid");
+
+      let checkMark = fieldElement.parentNode.querySelector(".checkmark");
+      if (!checkMark) {
+        checkMark = document.createElement("span");
+        checkMark.className = "checkmark";
+        checkMark.textContent = "✔";
+        checkMark.style.color = "green";
+        checkMark.style.position = "absolute";
+        checkMark.style.right = "10px";
+        checkMark.style.top = `${fieldElement.offsetHeight / 2}px`;
+        checkMark.style.transform = "translateY(-50%)";
+        fieldElement.parentNode.style.position = "relative";
+        fieldElement.parentNode.appendChild(checkMark);
+      }
+    }
+
+    function validateEmail() {
+      const email = document.getElementById('email').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(email)) {
+        formState.email = true;
+        showSuccess('email');
+      } else {
+        formState.email = false;
+        showError('email', 'Please enter a valid email address.');
+      }
+      updateButtonState();
+    }
+
+    function validatePassword() {
+      const password = document.getElementById('password').value;
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+      if (passwordRegex.test(password)) {
+        formState.password = true;
+        showSuccess('password');
+      } else {
+        formState.password = false;
+        showError('password', 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a symbol.');
+      }
+      updateButtonState();
+    }
+
+    function validateVerifyPassword() {
+      const password = document.getElementById('password').value;
+      const verifyPassword = document.getElementById('confirm-password').value;
+      if (password === verifyPassword) {
+        formState.verifyPassword = true;
+        showSuccess('confirm-password');
+      } else {
+        formState.verifyPassword = false;
+        showError('confirm-password', 'Passwords do not match.');
+      }
+      updateButtonState();
+    }
+
+    function validateCardNumber() {
+      const cardNumber = document.getElementById('card-number').value;
+      const cardNumberRegex = /^\d{16}$/;
+      if (cardNumberRegex.test(cardNumber)) {
+        formState.cardNumber = true;
+        showSuccess('card-number');
+      } else {
+        formState.cardNumber = false;
+        showError('card-number', 'Please enter a valid 16-digit card number.');
+      }
+      updateButtonState();
+    }
+
+    function validateExpiryDate() {
+      const expiryDate = document.getElementById('expiry-date').value;
+      const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      const currentDate = new Date();
+      const [month, year] = expiryDate.split('/');
+      const expiry = new Date(`20${year}`, month - 1);
+      if (expiryDateRegex.test(expiryDate) && expiry > currentDate) {
+        formState.expiryDate = true;
+        showSuccess('expiry-date');
+      } else {
+        formState.expiryDate = false;
+        showError('expiry-date', 'Please enter a valid expiry date in MM/YY format.');
+      }
+      updateButtonState();
+    }
+
+    function validateCVC() {
+      const cvc = document.getElementById('cvc').value;
+      const cvcRegex = /^\d{3,4}$/;
+      if (cvcRegex.test(cvc)) {
+        formState.cvc = true;
+        showSuccess('cvc');
+      } else {
+        formState.cvc = false;
+        showError('cvc', 'Please enter a valid 3 or 4-digit CVC.');
+      }
+      updateButtonState();
+    }
+
+    function updateButtonState() {
+      const allFieldsValid = Object.values(formState).every(Boolean);
+      const submitButton = document.getElementById('submitButton');
+      if (allFieldsValid) {
+        submitButton.disabled = false;
+        submitButton.classList.remove('disabled');
+      } else {
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled');
+      }
+    }
+
+    let emailTouched = false;
+    let passwordTouched = false;
+    let verifyPasswordTouched = false;
+    let cardNumberTouched = false;
+    let expiryDateTouched = false;
+    let cvcTouched = false;
+
+    document.getElementById('email').addEventListener('input', () => {
+      emailTouched = true;
+    });
+
+    document.getElementById('password').addEventListener('input', () => {
+      passwordTouched = true;
+    });
+
+    document.getElementById('confirm-password').addEventListener('input', () => {
+      verifyPasswordTouched = true;
+    });
+
+    document.getElementById('card-number').addEventListener('input', () => {
+      cardNumberTouched = true;
+    });
+
+    document.getElementById('expiry-date').addEventListener('input', () => {
+      expiryDateTouched = true;
+    });
+
+    document.getElementById('cvc').addEventListener('input', () => {
+      cvcTouched = true;
+    });
+
+    document.getElementById('email').addEventListener('blur', () => {
+      if (!document.getElementById('email').value.trim() && emailTouched) {
+        showError("email", "This field is required.");
+      } else if (document.getElementById('email').value.trim()) {
+        validateEmail();
+      }
+    });
+
+    document.getElementById('password').addEventListener('blur', () => {
+      if (!document.getElementById('password').value.trim() && passwordTouched) {
+        showError("password", "This field is required.");
+      } else if (document.getElementById('password').value.trim()) {
+        validatePassword();
+      }
+    });
+
+    document.getElementById('confirm-password').addEventListener('blur', () => {
+      if (!document.getElementById('confirm-password').value.trim() && verifyPasswordTouched) {
+        showError("confirm-password", "This field is required.");
+      } else if (document.getElementById('confirm-password').value.trim()) {
+        validateVerifyPassword();
+      }
+    });
+
+    document.getElementById('card-number').addEventListener('blur', () => {
+      if (!document.getElementById('card-number').value.trim() && cardNumberTouched) {
+        showError("card-number", "This field is required.");
+      } else if (document.getElementById('card-number').value.trim()) {
+        validateCardNumber();
+      }
+    });
+
+    document.getElementById('expiry-date').addEventListener('blur', () => {
+      if (!document.getElementById('expiry-date').value.trim() && expiryDateTouched) {
+        showError("expiry-date", "This field is required.");
+      } else if (document.getElementById('expiry-date').value.trim()) {
+        validateExpiryDate();
+      }
+    });
+
+    document.getElementById('cvc').addEventListener('blur', () => {
+      if (!document.getElementById('cvc').value.trim() && cvcTouched) {
+        showError("cvc", "This field is required.");
+      } else if (document.getElementById('cvc').value.trim()) {
+        validateCVC();
+      }
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (Object.values(formState).every(Boolean)) {
+        document.getElementById('signup').style.display = 'none';
+        document.getElementById('confirmation').style.display = 'block';
+      } else {
+        showError('form', 'Please fill out all fields correctly before submitting.');
+      }
+    });
+  </script>
+</body>
+</html>

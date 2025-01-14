@@ -1,0 +1,583 @@
+/* -----------------------
+   Global Styles
+------------------------ */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  /* Use Open Sans for body text */
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  color: #333;
+
+  /* Background image as requested */
+  background: url('images/background.webp') no-repeat center center fixed;
+  background-size: cover;
+
+  position: relative;
+  max-width: 100%;
+}
+
+/* Use Montserrat for headings */
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Simple fade-in animation (triggered by JS) */
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.fade-in.appear {
+  opacity: 1;
+}
+
+/* Form Styles */
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input.valid-field {
+  border: 2px solid green;
+}
+
+input.invalid-field {
+  border: 2px solid red;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="radio"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+form input[type="radio"] {
+  display: inline-block;
+  width: auto;
+  margin-right: 10px;
+}
+
+form input[type="text"]#cvc {
+  width: 100%;
+}
+
+.helper-text {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+input.valid {
+  padding-right: 30px;
+}
+
+/* Remove or comment out checkmark styles if not needed */
+.checkmark {
+  display: none;
+}
+
+/* Specific adjustment for password field */
+#password + .checkmark {
+  top: calc(50% - 5px);
+}
+
+/* Specific adjustment for CVC field checkmark */
+#cvc + .checkmark {
+  right: -10px;
+}
+
+/* Button Styles */
+.cta-button {
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 0; /* Add margin for spacing */
+}
+
+.cta-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.cta-button:hover:not(.disabled) {
+  background-color: #ff4a3d;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+  form label,
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="radio"] {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  form input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  form input[type="text"]#cvc {
+    width: 100%;
+  }
+
+  /* Ensure subscription options are aligned */
+  #subscription-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align radio buttons with text */
+    gap: 10px;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+  }
+
+  .radio-label input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.1); /* Uniform size */
+  }
+}
+
+/* Subscription Options */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.form-group label input[type="radio"] {
+  margin-right: 8px; /* Space between radio button and text */
+  transform: scale(1.2); /* Slightly enlarge buttons for accessibility */
+}
+
+/* Password Fields */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Add space for the reveal button */
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%); /* Ensures vertical centering */
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* Ensures consistent alignment */
+}
+
+.toggle-password:hover {
+  color: #007BFF; /* Change color on hover */
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Space for the toggle button */
+  box-sizing: border-box;
+}
+
+/* Center the payment options block */
+.payment-options-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the block */
+  margin-bottom: 20px;
+}
+
+.payment-options-group .form-group {
+  width: 100%;
+  max-width: 400px; /* Ensure consistent width */
+  display: flex;
+  justify-content: center; /* Center the form group */
+}
+
+.payment-options-group .form-group input {
+  width: 100%; /* Ensure input fields take full width */
+}
+
+/* -----------------------
+   Header Section
+------------------------ */
+header {
+  /* Simple green-to-blue gradient for more personality */
+  background: linear-gradient(90deg, rgba(76,175,80,1) 0%, rgba(68,167,227,1) 100%);
+  color: white;
+  padding: 20px 0;
+}
+
+/* Logo & Title - Stacked on mobile, centered */
+.header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+  justify-content: center;
+}
+
+.logo {
+  width: 100px;
+  display: block;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Two buttons - Stacked & centered on mobile */
+.header-app-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+/* Actual link button styling */
+.app-store-link {
+  display: inline-block;
+  margin: 10px 0;
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.app-store-link:hover {
+  text-decoration: underline;
+}
+
+/* On larger screens => side-by-side layout */
+@media (min-width: 768px) {
+  .header-top {
+    flex-direction: row;
+  }
+
+  header h1 {
+    font-size: 2.5em;
+  }
+
+  .header-app-links {
+    flex-direction: row;
+  }
+}
+
+/* -----------------------
+   Intro Section
+------------------------ */
+#intro {
+  max-width: 800px;
+  margin: 30px auto 20px;
+  padding: 30px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+
+  /* Subtle box shadow for better contrast */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.text-background {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 30px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin: 30px auto;
+  max-width: 800px;
+}
+
+.hidden {
+  display: none;
+}
+
+#intro h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+/* -----------------------
+   Scroll Prompt
+------------------------ */
+.scroll-prompt {
+  margin: 20px auto;
+  text-align: center;
+  /* 
+    Semi-transparent background behind the text/arrow.
+    Adjust opacity or color to your liking.
+  */
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.scroll-prompt .prompt-text {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  margin-bottom: 5px;
+}
+
+.arrow-down {
+  font-size: 1.5em;
+  color: #fff;
+  animation: bounceArrow 1s infinite alternate;
+  cursor: default;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+@keyframes bounceArrow {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+/* -----------------------
+   Features Section
+------------------------ */
+#features {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#features h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Feature Cards (icon + text) */
+.feature {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.feature-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 1.5em;
+  color: #4caf50;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.feature p {
+  font-size: 1.1em;
+  margin-top: 10px;
+  max-width: 600px;
+}
+
+/* “Coming Soon” styling */
+.coming-soon {
+  font-size: 0.8em;
+  color: #f39c12;
+  font-weight: bold;
+}
+
+/* -----------------------
+   How It Works
+------------------------ */
+#how-it-works {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#how-it-works h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.steps {
+  list-style: none;
+  text-align: left;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 600px;
+}
+
+.steps li {
+  margin: 15px 0;
+  display: flex;
+  align-items: baseline;
+  font-size: 1.1em;
+}
+
+.steps li strong {
+  min-width: 100px;
+  text-align: left;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.steps li span {
+  flex: 1;
+  text-align: left;
+}
+
+/* -----------------------
+   CTA Section
+------------------------ */
+#cta {
+  /* A teal-to-green gradient for the CTA area */
+  background: linear-gradient(90deg, rgba(0,178,155,1) 0%, rgba(76,175,80,1) 100%);
+  color: white;
+  padding: 40px 0;
+  margin: 30px 0 0 0;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#cta h2 {
+  font-size: 2em;
+  margin: 0 0 10px;
+}
+
+#cta p {
+  font-size: 1.1em;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 0; /* Add margin for spacing */
+}
+
+.cta-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.cta-button:hover:not(.disabled) {
+  background-color: #ff4a3d;
+}
+
+/* -----------------------
+   Footer
+------------------------ */
+footer {
+  margin-top: 20px;
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+  font-size: 0.9em;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+footer a {
+  color: #ff6f61;
+  text-decoration: none;
+  margin: 0 10px;
+  display: inline-block;
+  padding: 10px 0; /* Increase tappable area */
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Social Login Styles */
+.social-login {
+  margin: 20px 0;
+}
+
+.social-login .cta-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
