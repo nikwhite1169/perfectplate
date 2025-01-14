@@ -1,1 +1,27 @@
-/website/
+# Exclude everything in app and app - Copy
+/app/
+/app - Copy/
+/perfectplate-app-debug-gradle-build/
+perfectplate-app-debug-gradle-build.zip
+menuwise-ads.rar
+
+# Exclude unnecessary backup and history files
+/website backup/
+/.history/
+
+# Allow pertinent website files
+!.gitignore
+!index.html
+!privacy-policy.html
+!script.js
+!styles.css
+!signup.html
+!test.html
+!terms-of-service.html
+!faq.html
+!images/
+
+# Exclude other archives and unnecessary files
+*.zip
+*.rar
+*.bak
