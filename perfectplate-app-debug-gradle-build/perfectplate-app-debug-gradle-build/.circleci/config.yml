@@ -1,0 +1,32 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.7.0
+jobs:
+  install_dependencies:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+  build_ios:
+    macos:
+      xcode: "13.0.0"
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Build iOS Release
+          command: |
+            cd ios
+            pod install
+            xcodebuild archive -workspace DineWise.xcworkspace -scheme DineWise -archivePath DineWise.xcarchive -configuration Release
+            xcodebuild -exportArchive -archivePath YourApp.xcarchive -exportPath DineWise.ipa -exportOptionsPlist ExportOptions.plist
+workflows:
+  build_and_deploy:
+    jobs:
+      - install_dependencies
+      - build_ios:
+          requires:
+            - install_dependencies

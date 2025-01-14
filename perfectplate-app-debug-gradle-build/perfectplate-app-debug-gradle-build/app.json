@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "extra": {
+      "GPT_API_KEY": "@env:GPT_API_KEY",
+      "eas": {
+        "projectId": "1ed45fd8-d9b8-411d-97a4-7c51b4f05e10"
+      }
+    },
+    "name": "DineWise",
+    "slug": "DineWise",
+    "version": "1.1.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nikwhite.DineWise",
+      "buildNumber": "8",
+      "infoPlist": {}
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.nikwhite.DineWise"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "react-native-document-scanner-plugin",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "owner": "DineWise",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/1ed45fd8-d9b8-411d-97a4-7c51b4f05e10"
+    }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-1733112943919039~4686474950",
+    "ios_app_id": "ca-app-pub-3940256099942544~3347511713"
+  }
+}

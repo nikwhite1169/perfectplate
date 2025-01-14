@@ -1,0 +1,12 @@
+diff --git a/node_modules/@segment/sovran-react-native/android/build.gradle b/node_modules/@segment/sovran-react-native/android/build.gradle
+index 7a32910..2a53a82 100644
+--- a/node_modules/@segment/sovran-react-native/android/build.gradle
++++ b/node_modules/@segment/sovran-react-native/android/build.gradle
+@@ -1,6 +1,6 @@
+ buildscript {
+   // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+-  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : (project.properties["Sovran_kotlinVersion"]).toInteger()
++def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["Sovran_kotlinVersion"]
+ 
+   repositories {
+     google()

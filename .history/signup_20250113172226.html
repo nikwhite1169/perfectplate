@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PerfectPlate: Start Your Free 3-Day Trial</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src="images/logo.png" alt="PerfectPlate Logo" class="logo" />
+      <h1>PerfectPlate: Start Your Free 3-Day Trial</h1>
+    </div>
+  </header>
+
+  <section id="signup">
+    <div class="text-background">
+      <h2>Join PerfectPlate Today!</h2>
+      <p>PerfectPlate gives you personalized meal recommendations tailored to your goals. Start your free trial today and discover the perfect plate for your lifestyle!</p>
+      
+      <form id="signup-form" action="/process-payment" method="POST">
+        <h3>Subscription Options:</h3>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="subscription" value="monthly" checked />
+            Monthly: $7.99/month
+          </label>
+          <label>
+            <input type="radio" name="subscription" value="yearly" />
+            Yearly: $72.99/year (Save 25%)
+          </label>
+        </div>
+
+        <h3>Create Account:</h3>
+        <div class="social-login">
+          <button class="cta-button">Continue with Google</button>
+          <button class="cta-button">Continue with Facebook</button>
+        </div>
+
+        <p>or</p>
+
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email Address" />
+          <span id="email-error" class="error-message"></span>
+        </div>
+
+        <div class="form-group password-group">
+          <label class="hint">
+            Password must be at least 8 characters and include uppercase, lowercase, a number, and a symbol.
+          </label>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter Password" />
+            <button type="button" class="toggle-password">👁</button>
+          </div>
+          <span id="password-error" class="error-message"></span>
+        </div>
+
+        <div class="form-group password-group">
+          <div class="password-wrapper">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" />
+            <button type="button" class="toggle-password">👁</button>
+          </div>
+          <span id="confirm-password-error" class="error-message"></span>
+        </div>
+
+        <h3>Payment Information:</h3>
+        <div class="form-group">
+          <input type="text" id="card-number" placeholder="Card Number" />
+          <span id="card-number-error" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)" />
+          <span id="expiry-date-error" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <input type="text" id="cvc" placeholder="CVC" />
+          <span id="cvc-error" class="error-message"></span>
+        </div>
+
+        <button id="submitButton" class="cta-button disabled" disabled>Start Free Trial</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
+    <a href="privacy-policy.html">Privacy Policy</a> | 
+    <a href="terms-of-service.html">Terms of Service</a> | 
+    <a href="faq.html">FAQ</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
