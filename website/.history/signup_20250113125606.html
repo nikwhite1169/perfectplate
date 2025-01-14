@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PerfectPlate: Start Your Free 3-Day Trial</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src="images/logo.png" alt="PerfectPlate Logo" class="logo" />
+      <h1>PerfectPlate: Start Your Free 3-Day Trial</h1>
+    </div>
+  </header>
+
+  <section id="signup">
+    <div class="text-background">
+      <h2>Join PerfectPlate Today!</h2>
+      <p>PerfectPlate gives you personalized meal recommendations tailored to your goals. Start your free trial today and discover the perfect plate for your lifestyle!</p>
+      
+      <!-- Social Login Options -->
+      <div class="social-login">
+        <button class="cta-button">Continue with Google</button>
+        <button class="cta-button">Continue with Facebook</button>
+      </div>
+      
+      <p>or</p>
+      
+      <form id="signup-form" action="/process-payment" method="POST">
+        <h3>Subscription Options:</h3>
+        <label>
+          <input type="radio" name="subscription" value="monthly" checked />
+          Monthly: $7.99/month
+        </label>
+        <label>
+          <input type="radio" name="subscription" value="yearly" />
+          Yearly: $72.99/year (Save 25%)
+        </label>
+
+        <h3>Create Account:</h3>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required />
+        
+        <label for="password">Create Password:</label>
+        <input type="password" id="password" name="password" required />
+        
+        <label for="verify-password">Verify Password:</label>
+        <input type="password" id="verify-password" name="verify-password" required />
+
+        <h3>Payment Information:</h3>
+        <!-- Replace with actual payment gateway integration -->
+        <label for="card-number">Card Number:</label>
+        <input type="text" id="card-number" name="card-number" required />
+        <label for="expiry-date">Expiry Date (MM/YY):</label>
+        <input type="text" id="expiry-date" name="expiry-date" required />
+        <label for="cvc">CVC:</label>
+        <input type="text" id="cvc" name="cvc" required />
+
+        <p>Your free 3-day trial begins immediately after signing up. You won’t be charged until the trial ends.</p>
+        <button type="submit" class="cta-button">Start Free Trial</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="confirmation" class="hidden">
+    <div class="text-background">
+      <h2>Thank you for subscribing!</h2>
+      <p>Download the PerfectPlate app to begin your journey:</p>
+      <a href="https://www.apple.com/app-store/" class="cta-button">Download for iOS</a>
+      <a href="https://play.google.com/store" class="cta-button">Download for Android</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
+    <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a> | <a href="faq.html">FAQ</a>
+  </footer>
+
+  <script>
+    // Example script to handle form submission and show confirmation message
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const password = document.getElementById('password').value;
+      const verifyPassword = document.getElementById('verify-password').value;
+      const email = document.getElementById('email').value;
+      const cardNumber = document.getElementById('card-number').value;
+      const expiryDate = document.getElementById('expiry-date').value;
+      const cvc = document.getElementById('cvc').value;
+
+      if (password !== verifyPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      if (!passwordPattern.test(password)) {
+        alert('Password must be at least 8 characters long, contain at least one number and one special character.');
+        return;
+      }
+
+      const cardNumberPattern = /^\d{16}$/;
+      if (!cardNumberPattern.test(cardNumber)) {
+        alert('Please enter a valid 16-digit card number.');
+        return;
+      }
+
+      const expiryDatePattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      if (!expiryDatePattern.test(expiryDate)) {
+        alert('Please enter a valid expiry date in MM/YY format.');
+        return;
+      }
+
+      const cvcPattern = /^\d{3}$/;
+      if (!cvcPattern.test(cvc)) {
+        alert('Please enter a valid 3-digit CVC.');
+        return;
+      }
+
+      document.getElementById('signup').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

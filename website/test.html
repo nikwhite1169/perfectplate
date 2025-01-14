@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Password Debug</title>
+  <style>
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+      box-sizing: border-box;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #666;
+    }
+
+    .toggle-password:hover {
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="password-wrapper">
+    <input type="password" id="password" placeholder="Enter Password">
+    <span class="toggle-password">👁</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.querySelector('.toggle-password');
+      const passwordInput = document.querySelector('#password');
+
+      toggle.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          toggle.textContent = '🙈';
+        } else {
+          passwordInput.type = 'password';
+          toggle.textContent = '👁';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
