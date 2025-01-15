@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PerfectPlate: Start Your Free 3-Day Trial</title>
+  <title>Sign Up - PerfectPlate</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +33,7 @@
       
       <form id="signup-form" action="/process-payment" method="POST">
         <h3>Subscription Options:</h3>
-        <div class="form-group">
+        <div class="subscription-block">
           <label>
             <input type="radio" name="subscription" value="monthly" checked />
             Monthly: $7.99/month
@@ -41,14 +44,21 @@
           </label>
         </div>
 
+        <div class="trial-info">
+          <p><strong>Note:</strong> Your card will not be charged until your 3-day free trial ends. Cancel anytime before the trial ends to avoid charges.</p>
+        </div>        
+
         <h3>Create Account:</h3>
         <!-- Social Login Buttons -->
-        <div class="social-login">
-          <button class="cta-button">Continue with Google</button>
-          <button class="cta-button">Continue with Facebook</button>
-        </div>
-
-        <p>or</p>
+          <div class="social-login">
+            <button class="cta-button google-login">
+              <img src="images/google-login.png" alt="Sign up with Google" />
+            </button>
+            <button class="cta-button facebook-login">
+              <img src="images/facebook-login.png" alt="Sign up with Facebook" />
+            </button>
+          </div>
+                <p>or</p>
 
         <!-- Email Field -->
         <div class="form-group">
@@ -58,12 +68,9 @@
 
         <!-- Password Field -->
         <div class="form-group password-group">
-            <label class="hint">
-              Password must be at least 8 characters and include uppercase, lowercase, a number, and a symbol.
-            </label>
             <div class="password-wrapper">
               <input type="password" id="password" placeholder="Enter Password" />
-              <span class="toggle-password" tabindex="-1">👁</span>
+              <span class="toggle-password" id="toggle-password">👁</span>
             </div>
             <span id="password-error" class="error-message"></span>
           </div>
@@ -72,7 +79,7 @@
         <div class="form-group password-group">
             <div class="password-wrapper">
               <input type="password" id="confirm-password" placeholder="Confirm Password" />
-              <span class="toggle-password" tabindex="-1">👁</span>
+              <span class="toggle-password" id="toggle-confirm-password">👁</span>
             </div>
             <span id="confirm-password-error" class="error-message"></span>
           </div>
@@ -109,13 +116,17 @@
 
   <section id="confirmation" class="hidden">
     <div class="text-background">
-      <h2>Thank you for subscribing!</h2>
-      <p>Download the PerfectPlate app to begin your journey:</p>
-      <a href="https://www.apple.com/app-store/" class="cta-button">Download for iOS</a>
-      <a href="https://play.google.com/store" class="cta-button">Download for Android</a>
+      <h2>Ready to Start Your Journey?</h2>
+      <p>Download the PerfectPlate app to begin enjoying personalized meal recommendations!</p>
+      <a href="https://www.apple.com/app-store/" class="app-store-button">
+        <img src="images/apple-store-badge.svg" alt="Download on the App Store" />
+      </a>
+      <a href="https://play.google.com/store" class="app-store-button">
+        <img src="images/google-play-badge.png" alt="Get it on Google Play" />
+      </a>
     </div>
   </section>
-
+  
   <footer>
     <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
     <a href="privacy-policy.html">Privacy Policy</a> | 
@@ -378,6 +389,7 @@
     showError('form', 'Please fill out all fields correctly before submitting.');
   }
 });
+
 
       // Add show/hide password functionality
   document.addEventListener('DOMContentLoaded', () => {

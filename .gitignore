@@ -8,6 +8,7 @@ menuwise-ads.rar
 # Exclude unnecessary backup and history files
 /website backup/
 /.history/
+/website/
 
 # Allow pertinent website files
 !.gitignore
@@ -16,10 +17,14 @@ menuwise-ads.rar
 !script.js
 !styles.css
 !signup.html
-!test.html
 !terms-of-service.html
 !faq.html
 !images/
+!account.html
+!favicon.ico
+!login.html
+!reset-password.html
+!server.js
 
 # Exclude other archives and unnecessary files
 *.zip

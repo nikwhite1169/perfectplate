@@ -1,3 +1,104 @@
+// Handle Account Form Submission
+document.getElementById('account-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  alert('Your changes have been saved.');
+});
+
+// Handle Cancel Subscription
+document.getElementById('cancel-subscription').addEventListener('click', () => {
+  if (confirm('Are you sure you want to cancel your subscription?')) {
+    alert('Your subscription has been canceled.');
+  }
+});
+
+document.getElementById('login-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  // Simple validation (replace with real authentication logic)
+  if (email === "test@perfectplate.com" && password === "password123") {
+    alert("Login successful!");
+    window.location.href = "account.html"; // Redirect to account management page
+  } else {
+    alert("Invalid email or password. Please try again.");
+  }
+});
+
+// Handle Reset Password Form Submission
+document.getElementById('reset-password-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const email = document.getElementById('reset-email').value;
+
+  // Simulate sending a reset link
+  alert(`A password reset link has been sent to ${email}.`);
+});
+
+// Password Toggle Visibility
+document.querySelectorAll('.toggle-password').forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const passwordInput = toggle.previousElementSibling; // Get the associated input
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text'; // Switch to text
+      toggle.textContent = '🙈'; // Change icon
+    } else {
+      passwordInput.type = 'password'; // Switch back to password
+      toggle.textContent = '👁'; // Change icon
+    }
+  });
+
+  // Prevent tabbing to the toggle icon
+  toggle.setAttribute('tabindex', '-1');
+});
+
+// Validate Password Complexity
+function validatePassword() {
+  const password = document.getElementById('password').value;
+  const passwordError = document.getElementById('password-error');
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+
+  if (!passwordRegex.test(password)) {
+    passwordError.textContent = 'Password must be at least 8 characters, include uppercase, lowercase, a number, and a symbol.';
+    return false;
+  }
+  passwordError.textContent = ''; // Clear the error
+  return true;
+}
+
+// Validate Password Match
+function validateConfirmPassword() {
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+  const confirmPasswordError = document.getElementById('confirm-password-error');
+
+  if (password !== confirmPassword) {
+    confirmPasswordError.textContent = 'Passwords do not match.';
+    return false;
+  }
+  confirmPasswordError.textContent = ''; // Clear the error
+  return true;
+}
+
+// Form Submission for Account Page
+document.getElementById('account-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const isPasswordValid = validatePassword();
+  const isConfirmPasswordValid = validateConfirmPassword();
+
+  if (isPasswordValid && isConfirmPasswordValid) {
+    alert('Changes saved successfully!');
+  } else {
+    alert('Please fix the errors before saving changes.');
+  }
+});
+
+// Attach validation events
+document.getElementById('password').addEventListener('input', validatePassword);
+document.getElementById('confirm-password').addEventListener('input', validateConfirmPassword);
+
+
 /* document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded, attaching toggle functionality...");
 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - PerfectPlate</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <img src="images/logo.png" alt="PerfectPlate Logo" class="logo" />
+      <h1>Login</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="account-settings-box">
+      <h2>Welcome Back!</h2>
+      <p>Please log in to access your account and manage your settings.</p>
+
+      <!-- Social Login Buttons -->
+      <div class="social-login">
+        <button class="cta-button">
+          <img src="images/login-with-google.png" alt="Login with Google" />
+        </button>
+        <button class="cta-button">
+          <img src="images/login-with-facebook.png" alt="Login with Facebook" />
+        </button>
+      </div>
+
+      <p>or</p>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+
+        <div class="form-group password-group">
+          <label for="password">Password:</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter your password" required />
+            <span class="toggle-password">👁</span>
+          </div>
+        </div>
+
+        <button type="submit" class="cta-button">Login</button>
+      </form>
+
+      <p class="additional-options">
+        Don't have an account? <a href="signup.html">Sign Up</a> <br />
+        Forgot your password? <a href="reset-password.html">Reset Password</a>
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
+    <a href="privacy-policy.html">Privacy Policy</a> |
+    <a href="terms-of-service.html">Terms of Service</a> |
+    <a href="faq.html">FAQ</a>
+  </footer>
+
+  <script>
+    // Password Toggle Visibility
+    document.querySelectorAll('.toggle-password').forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const passwordInput = toggle.previousElementSibling;
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          toggle.textContent = '🙈'; // Change icon
+        } else {
+          passwordInput.type = 'password';
+          toggle.textContent = '👁'; // Change icon
+        }
+      });
+    });
+
+    // Handle Login Form Submission
+    document.getElementById('login-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (email && password) {
+        alert('Login successful! Redirecting...');
+        window.location.href = 'account.html'; // Redirect to account page
+      } else {
+        alert('Please enter a valid email and password.');
+      }
+    });
+  </script>
+</body>
+</html>
