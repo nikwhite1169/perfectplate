@@ -17,6 +17,11 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
 </head>
 <body>
   <header>
@@ -31,7 +36,8 @@
       <h2>Join PerfectPlate Today!</h2>
       <p>PerfectPlate gives you personalized meal recommendations tailored to your goals. Start your free trial today and discover the perfect plate for your lifestyle!</p>
       
-      <form id="signup-form" action="/process-payment" method="POST">
+      <!-- Removed action and method to avoid the second unintended request -->
+      <form id="signup-form">
         <h3>Subscription Options:</h3>
         <div class="subscription-block">
           <label>
@@ -50,15 +56,15 @@
 
         <h3>Create Account:</h3>
         <!-- Social Login Buttons -->
-          <div class="social-login">
-            <button class="cta-button google-login">
-              <img src="images/google-login.png" alt="Sign up with Google" />
-            </button>
-            <button class="cta-button facebook-login">
-              <img src="images/facebook-login.png" alt="Sign up with Facebook" />
-            </button>
-          </div>
-                <p>or</p>
+        <div class="social-login">
+          <button class="cta-button google-login">
+            <img src="images/google-login.png" alt="Sign up with Google" />
+          </button>
+          <button class="cta-button facebook-login">
+            <img src="images/facebook-login.png" alt="Sign up with Facebook" />
+          </button>
+        </div>
+        <p>or</p>
 
         <!-- Email Field -->
         <div class="form-group">
@@ -68,65 +74,67 @@
 
         <!-- Password Field -->
         <div class="form-group password-group">
-            <div class="password-wrapper">
-              <input type="password" id="password" placeholder="Enter Password" />
-              <span class="toggle-password" id="toggle-password">👁</span>
-            </div>
-            <span id="password-error" class="error-message"></span>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter Password" />
+            <span class="toggle-password" id="toggle-password">👁</span>
           </div>
-          
+          <span id="password-error" class="error-message"></span>
+        </div>
+        
         <!-- Confirm Password Field -->
         <div class="form-group password-group">
-            <div class="password-wrapper">
-              <input type="password" id="confirm-password" placeholder="Confirm Password" />
-              <span class="toggle-password" id="toggle-confirm-password">👁</span>
-            </div>
-            <span id="confirm-password-error" class="error-message"></span>
+          <div class="password-wrapper">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" />
+            <span class="toggle-password" id="toggle-confirm-password">👁</span>
           </div>
-          
-        <!-- Payment Information -->
+          <span id="confirm-password-error" class="error-message"></span>
+        </div>
+        
+
         <h3>Payment Information:</h3>
-        <div class="form-group">
-          <input type="text" id="card-number" placeholder="Card Number" />
-          <span id="card-number-error" class="error-message"></span>
+        <div class="form-group" id="card-element-container">
+          <label for="card-element">Card Details:</label>
+          <div id="card-element"></div> <!-- Stripe Card Element -->
+          <div id="card-errors" role="alert"></div> <!-- Error container -->
         </div>
+
         <div class="form-group">
-          <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)" />
-          <span id="expiry-date-error" class="error-message"></span>
+          <label>
+            <input type="checkbox" id="terms-checkbox" />
+            By registering, you agree to our&nbsp;
+            <a href="terms-of-service.html" target="_blank">Terms of Service</a>&nbsp;and&nbsp;
+            <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.
+          </label>
+          <span id="terms-error" class="error-message"></span>
         </div>
-        <div class="form-group">
-          <input type="text" id="cvc" placeholder="CVC" />
-          <span id="cvc-error" class="error-message"></span>
-        </div>
-        <div class="form-group">
-            <label>
-              <input type="checkbox" id="terms-checkbox" />
-              By registering, you agree to our&nbsp;
-              <a href="terms-of-service.html" target="_blank">Terms of Service</a>&nbsp;and&nbsp;
-              <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.
-            </label>
-            <span id="terms-error" class="error-message"></span>
-          </div>
-                    
+                  
         <!-- Start Free Trial Button -->
         <button id="submitButton" class="cta-button disabled" disabled>Start Free Trial</button>
-    </form>
+      </form>
     </div>
   </section>
 
   <section id="confirmation" class="hidden">
     <div class="text-background">
-      <h2>Ready to Start Your Journey?</h2>
-      <p>Download the PerfectPlate app to begin enjoying personalized meal recommendations!</p>
-      <a href="https://www.apple.com/app-store/" class="app-store-button">
-        <img src="images/apple-store-badge.svg" alt="Download on the App Store" />
-      </a>
-      <a href="https://play.google.com/store" class="app-store-button">
-        <img src="images/google-play-badge.png" alt="Get it on Google Play" />
-      </a>
+      <h2>🎉 Congratulations on Joining PerfectPlate! 🎉</h2>
+      <p>
+        You’re one step closer to enjoying personalized meal recommendations tailored just for you. 
+        If you haven't already, download the PerfectPlate app now and get started!
+      </p>
+      <div class="app-buttons">
+        <a href="https://www.apple.com/app-store/" class="app-store-button">
+          <img src="images/apple-store-badge.svg" alt="Download on the App Store" />
+        </a>
+        <a href="https://play.google.com/store" class="app-store-button">
+          <img src="images/google-play-badge.png" alt="Get it on Google Play" />
+        </a>
+      </div>
+      <p>
+        If you have any questions, feel free to reach out to our support team. Welcome aboard!
+      </p>
     </div>
   </section>
-  
+    
   <footer>
     <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
     <a href="privacy-policy.html">Privacy Policy</a> | 
@@ -139,45 +147,243 @@
       email: false,
       password: false,
       verifyPassword: false,
-      cardNumber: false,
-      expiryDate: false,
-      cvc: false
     };
-
+  
+    let stripe, elements, cardElement;
+    window.stripeCardComplete = false; // Initialize Stripe card completion status
+  
+    // Unified updateButtonState function
+    function updateButtonState() {
+      const formFields = ['email', 'password', 'confirm-password'];
+      const allFieldsValid = formFields.every((field) => {
+        const element = document.getElementById(field);
+        return element.value.trim() !== '' && element.classList.contains('valid');
+      });
+  
+      const stripeElementValid = window.stripeCardComplete; 
+      const termsChecked = document.getElementById('terms-checkbox').checked;
+      const submitButton = document.getElementById('submitButton');
+  
+      if (allFieldsValid && stripeElementValid && termsChecked) {
+        submitButton.disabled = false;
+        submitButton.classList.remove('disabled');
+      } else {
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled');
+      }
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      let isSubmitting = false;
+  
+      // Initialize Stripe
+      stripe = Stripe('pk_test_51QhdtaFvH3kJIQY4d10LyKe9KA8nMhst62Oge1jThCJqFX0FCRkNhdRT6t1O7ptavhA8arUIgA2imh3ZBTnLuL6P00p19DUgu6');
+      elements = stripe.elements();
+  
+      cardElement = elements.create('card', {
+        style: {
+          base: {
+            fontSize: '16px',
+            color: '#32325d',
+            '::placeholder': { color: '#aab7c4' },
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a',
+          },
+        },
+      });
+  
+      cardElement.mount('#card-element');
+  
+      cardElement.on('change', (event) => {
+        const errorDisplay = document.getElementById('card-errors');
+        errorDisplay.textContent = event.error ? event.error.message : '';
+        window.stripeCardComplete = event.complete;
+        updateButtonState();
+      });
+  
+      const form = document.getElementById('signup-form');
+      const termsCheckbox = document.getElementById('terms-checkbox');
+  
+      // Silent validation for email on input
+      document.getElementById('email').addEventListener('input', () => {
+        const emailField = document.getElementById('email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(emailField.value.trim())) {
+          formState.email = true;
+          emailField.classList.add('valid');
+        } else {
+          formState.email = false;
+          emailField.classList.remove('valid');
+        }
+        updateButtonState();
+      });
+  
+      termsCheckbox.addEventListener('change', updateButtonState);
+  
+      document.getElementById('password').addEventListener('input', () => {
+        const passwordField = document.getElementById('password');
+        const confirmField = document.getElementById('confirm-password');
+        const passwordValue = passwordField.value;
+        const confirmValue = confirmField.value;
+  
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+        if (passwordRegex.test(passwordValue)) {
+          formState.password = true;
+          passwordField.classList.add('valid');
+        } else {
+          formState.password = false;
+          passwordField.classList.remove('valid');
+        }
+  
+        formState.verifyPassword = (passwordValue === confirmValue && confirmValue.trim() !== '');
+        if (formState.verifyPassword) {
+          confirmField.classList.add('valid');
+        } else {
+          confirmField.classList.remove('valid');
+        }
+  
+        updateButtonState();
+      });
+  
+      document.getElementById('confirm-password').addEventListener('input', () => {
+        const confirmField = document.getElementById('confirm-password');
+        const passwordValue = document.getElementById('password').value;
+        const confirmValue = confirmField.value;
+  
+        formState.verifyPassword = (passwordValue === confirmValue && confirmValue.trim() !== '');
+        if (formState.verifyPassword) {
+          confirmField.classList.add('valid');
+        } else {
+          confirmField.classList.remove('valid');
+        }
+  
+        updateButtonState();
+      });
+  
+      document.getElementById('password').addEventListener('blur', () => {
+        if (!document.getElementById('password').value.trim()) {
+          showError("password", "This field is required.");
+        } else {
+          validatePassword();
+        }
+      });
+  
+      document.getElementById('confirm-password').addEventListener('blur', () => {
+        if (!document.getElementById('confirm-password').value.trim()) {
+          showError("confirm-password", "This field is required.");
+        } else {
+          validateVerifyPassword();
+        }
+      });
+  
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmitting) return;
+        isSubmitting = true;
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+  
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const subscriptionType = document.querySelector('input[name="subscription"]:checked').value;
+  
+        try {
+          const { paymentMethod, error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: { email },
+          });
+          if (error) {
+            document.getElementById('card-errors').textContent = error.message;
+            return;
+          }
+  
+          const amount = subscriptionType === 'monthly' ? 799 : 7299;
+          const paymentResponse = await fetch('http://localhost:5000/api/payment/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, amount, paymentMethodId: paymentMethod.id }),
+          });
+          if (!paymentResponse.ok) {
+            const paymentErrorData = await paymentResponse.json();
+            throw new Error(paymentErrorData.error || 'Payment failed.');
+          }
+  
+          const signupResponse = await fetch('http://localhost:5000/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, subscriptionType }),
+          });
+          if (!signupResponse.ok) {
+            const signupErrorData = await signupResponse.json();
+            throw new Error(signupErrorData.error || 'Signup failed.');
+          }
+          const responseData = await signupResponse.json();
+          console.log('Signup response:', responseData);
+          localStorage.setItem('customerId', responseData.customerId);
+          localStorage.setItem('email', email);
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.userId);  // Make sure backend sends this if necessary
+          document.getElementById('signup').style.display = 'none';
+          document.getElementById('confirmation').style.display = 'block';
+        } catch (err) {
+          console.error('Error during signup or payment:', err);
+          alert(err.message);
+        } finally {
+          isSubmitting = false;
+          submitButton.disabled = false;
+        }
+      });
+    });
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.toggle-password').forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+          const passwordInput = toggle.previousElementSibling;
+          if (passwordInput && passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggle.textContent = '🙈';
+          } else if (passwordInput) {
+            passwordInput.type = 'password';
+            toggle.textContent = '👁';
+          }
+        });
+      });
+    });
+  
     function showError(field, message) {
-  const fieldElement = document.getElementById(field);
-  const hintElement = document.getElementById(`${field}-hint`);
-  const errorElement = document.getElementById(`${field}-error`);
-
-  if (hintElement) {
-    hintElement.style.color = "red";
-  } else {
-    errorElement.textContent = message;
-    errorElement.style.color = "red";
-  }
-
-  fieldElement.classList.remove("valid");
-
-  // Remove existing checkmark if present
-  const checkMark = fieldElement.parentNode.querySelector(".checkmark");
-  if (checkMark) {
-    checkMark.remove();
-  }
-}
-
+      const fieldElement = document.getElementById(field);
+      const hintElement = document.getElementById(`${field}-hint`);
+      const errorElement = document.getElementById(`${field}-error`);
+  
+      if (hintElement) {
+        hintElement.style.color = "red";
+      } else {
+        errorElement.textContent = message;
+        errorElement.style.color = "red";
+      }
+  
+      fieldElement.classList.remove("valid");
+      const checkMark = fieldElement.parentNode.querySelector(".checkmark");
+      if (checkMark) {
+        checkMark.remove();
+      }
+    }
+  
     function showSuccess(field) {
       const fieldElement = document.getElementById(field);
       const hintElement = document.getElementById(`${field}-hint`);
       const errorElement = document.getElementById(`${field}-error`);
-
+  
       if (hintElement) {
         hintElement.style.color = "black";
       } else {
         errorElement.textContent = "";
       }
-
+  
       fieldElement.classList.add("valid");
-
       let checkMark = fieldElement.parentNode.querySelector(".checkmark");
       if (!checkMark) {
         checkMark = document.createElement("span");
@@ -192,7 +398,7 @@
         fieldElement.parentNode.appendChild(checkMark);
       }
     }
-
+  
     function validateEmail() {
       const email = document.getElementById('email').value;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -205,7 +411,7 @@
       }
       updateButtonState();
     }
-
+  
     function validatePassword() {
       const password = document.getElementById('password').value;
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
@@ -218,7 +424,7 @@
       }
       updateButtonState();
     }
-
+  
     function validateVerifyPassword() {
       const password = document.getElementById('password').value;
       const verifyPassword = document.getElementById('confirm-password').value;
@@ -231,189 +437,6 @@
       }
       updateButtonState();
     }
-
-    function validateCardNumber() {
-      const cardNumber = document.getElementById('card-number').value;
-      const cardNumberRegex = /^\d{16}$/;
-      if (cardNumberRegex.test(cardNumber)) {
-        formState.cardNumber = true;
-        showSuccess('card-number');
-      } else {
-        formState.cardNumber = false;
-        showError('card-number', 'Please enter a valid 16-digit card number.');
-      }
-      updateButtonState();
-    }
-
-    function validateExpiryDate() {
-      const expiryDate = document.getElementById('expiry-date').value;
-      const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-      const currentDate = new Date();
-      const [month, year] = expiryDate.split('/');
-      const expiry = new Date(`20${year}`, month - 1);
-      if (expiryDateRegex.test(expiryDate) && expiry > currentDate) {
-        formState.expiryDate = true;
-        showSuccess('expiry-date');
-      } else {
-        formState.expiryDate = false;
-        showError('expiry-date', 'Please enter a valid expiry date in MM/YY format.');
-      }
-      updateButtonState();
-    }
-
-    function validateCVC() {
-      const cvc = document.getElementById('cvc').value;
-      const cvcRegex = /^\d{3,4}$/;
-      if (cvcRegex.test(cvc)) {
-        formState.cvc = true;
-        showSuccess('cvc');
-      } else {
-        formState.cvc = false;
-        showError('cvc', 'Please enter a valid 3 or 4-digit CVC.');
-      }
-      updateButtonState();
-    }
-
-    function updateButtonState() {
-      const allFieldsValid = Object.values(formState).every(Boolean);
-      const submitButton = document.getElementById('submitButton');
-      if (allFieldsValid) {
-        submitButton.disabled = false;
-        submitButton.classList.remove('disabled');
-      } else {
-        submitButton.disabled = true;
-        submitButton.classList.add('disabled');
-      }
-    }
-
-    let emailTouched = false;
-    let passwordTouched = false;
-    let verifyPasswordTouched = false;
-    let cardNumberTouched = false;
-    let expiryDateTouched = false;
-    let cvcTouched = false;
-
-    document.getElementById('email').addEventListener('input', () => {
-      emailTouched = true;
-    });
-
-    document.getElementById('password').addEventListener('input', () => {
-      passwordTouched = true;
-    });
-
-    document.getElementById('confirm-password').addEventListener('input', () => {
-      verifyPasswordTouched = true;
-    });
-
-    document.getElementById('card-number').addEventListener('input', () => {
-      cardNumberTouched = true;
-    });
-
-    document.getElementById('expiry-date').addEventListener('input', () => {
-      expiryDateTouched = true;
-    });
-
-    document.getElementById('cvc').addEventListener('input', () => {
-      cvcTouched = true;
-    });
-
-    document.getElementById('email').addEventListener('blur', () => {
-      if (!document.getElementById('email').value.trim() && emailTouched) {
-        showError("email", "This field is required.");
-      } else if (document.getElementById('email').value.trim()) {
-        validateEmail();
-      }
-    });
-
-    document.getElementById('password').addEventListener('blur', () => {
-      if (!document.getElementById('password').value.trim() && passwordTouched) {
-        showError("password", "This field is required.");
-      } else if (document.getElementById('password').value.trim()) {
-        validatePassword();
-      }
-    });
-
-    document.getElementById('confirm-password').addEventListener('blur', () => {
-      if (!document.getElementById('confirm-password').value.trim() && verifyPasswordTouched) {
-        showError("confirm-password", "This field is required.");
-      } else if (document.getElementById('confirm-password').value.trim()) {
-        validateVerifyPassword();
-      }
-    });
-
-    document.getElementById('card-number').addEventListener('blur', () => {
-      if (!document.getElementById('card-number').value.trim() && cardNumberTouched) {
-        showError("card-number", "This field is required.");
-      } else if (document.getElementById('card-number').value.trim()) {
-        validateCardNumber();
-      }
-    });
-
-    document.getElementById('expiry-date').addEventListener('blur', () => {
-      if (!document.getElementById('expiry-date').value.trim() && expiryDateTouched) {
-        showError("expiry-date", "This field is required.");
-      } else if (document.getElementById('expiry-date').value.trim()) {
-        validateExpiryDate();
-      }
-    });
-
-    document.getElementById('cvc').addEventListener('blur', () => {
-      if (!document.getElementById('cvc').value.trim() && cvcTouched) {
-        showError("cvc", "This field is required.");
-      } else if (document.getElementById('cvc').value.trim()) {
-        validateCVC();
-      }
-    });
-
-    document.getElementById('signup-form').addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  const termsCheckbox = document.getElementById('terms-checkbox');
-  const termsError = document.getElementById('terms-error');
-
-  if (!termsCheckbox.checked) {
-    // Show error if terms are not agreed
-    termsError.textContent = 'You must agree to the Terms of Service and Privacy Policy.';
-    termsError.style.color = 'red';
-    return; // Prevent form submission
-  } else {
-    // Clear error if checkbox is checked
-    termsError.textContent = '';
-  }
-
-  // Proceed with form validation
-  if (Object.values(formState).every(Boolean)) {
-    document.getElementById('signup').style.display = 'none';
-    document.getElementById('confirmation').style.display = 'block';
-  } else {
-    showError('form', 'Please fill out all fields correctly before submitting.');
-  }
-});
-
-
-      // Add show/hide password functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded, attaching toggle functionality...");
-
-    // Attach toggle functionality to all toggle-password buttons
-    document.querySelectorAll('.toggle-password').forEach((toggle) => {
-      toggle.addEventListener('click', () => {
-        const passwordInput = toggle.previousElementSibling;
-        if (passwordInput.type === 'password') {
-          passwordInput.type = 'text'; // Show password
-          toggle.textContent = '🙈'; // Update to 'hide' icon
-        } else {
-          passwordInput.type = 'password'; // Hide password
-          toggle.textContent = '👁'; // Update to 'show' icon
-        }
-      });
-
-      // Prevent tabbing to the icon
-      toggle.setAttribute('tabindex', '-1');
-    });
-
-    console.log("Password toggle functionality attached.");
-  });
   </script>
-</body>
+  </body>
 </html>

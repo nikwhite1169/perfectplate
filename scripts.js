@@ -35,34 +35,31 @@ document.getElementById('reset-password-form').addEventListener('submit', (event
   alert(`A password reset link has been sent to ${email}.`);
 });
 
-// Password Toggle Visibility
+// Toggle Password Visibility
 document.querySelectorAll('.toggle-password').forEach((toggle) => {
-  toggle.addEventListener('click', () => {
-    const passwordInput = toggle.previousElementSibling; // Get the associated input
+  toggle.addEventListener('click', function () {
+    const passwordInput = this.previousElementSibling;
     if (passwordInput.type === 'password') {
-      passwordInput.type = 'text'; // Switch to text
-      toggle.textContent = '🙈'; // Change icon
+      passwordInput.type = 'text';
+      this.textContent = '🙈'; // Show the hide icon
     } else {
-      passwordInput.type = 'password'; // Switch back to password
-      toggle.textContent = '👁'; // Change icon
+      passwordInput.type = 'password';
+      this.textContent = '👁'; // Show the show icon
     }
   });
-
-  // Prevent tabbing to the toggle icon
-  toggle.setAttribute('tabindex', '-1');
 });
 
-// Validate Password Complexity
+// Validate Password Requirements
 function validatePassword() {
   const password = document.getElementById('password').value;
   const passwordError = document.getElementById('password-error');
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
   if (!passwordRegex.test(password)) {
-    passwordError.textContent = 'Password must be at least 8 characters, include uppercase, lowercase, a number, and a symbol.';
+    passwordError.textContent = 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a symbol.';
     return false;
   }
-  passwordError.textContent = ''; // Clear the error
+  passwordError.textContent = '';
   return true;
 }
 
@@ -76,11 +73,11 @@ function validateConfirmPassword() {
     confirmPasswordError.textContent = 'Passwords do not match.';
     return false;
   }
-  confirmPasswordError.textContent = ''; // Clear the error
+  confirmPasswordError.textContent = '';
   return true;
 }
 
-// Form Submission for Account Page
+// Form Submission Handler
 document.getElementById('account-form').addEventListener('submit', (event) => {
   event.preventDefault();
 

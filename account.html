@@ -9,6 +9,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
   <header>
@@ -60,37 +61,16 @@
 
     <div class="account-settings-box">
       <!-- Payment and Billing Section -->
-      <section id="payment-settings">
-        <h3>Payment Settings</h3>
-        <form id="payment-form">
-          <div class="form-group">
-            <label for="card-name">Name on Card:</label>
-            <input type="text" id="card-name" placeholder="Enter name as it appears on card" required />
-            <span id="card-name-error" class="error-message"></span>
-          </div>
-      
-          <div class="form-group">
-            <label for="card-number">Card Number:</label>
-            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required />
-            <span id="card-number-error" class="error-message"></span>
-          </div>
-      
-          <div class="form-group">
-            <label for="expiry-date">Expiry Date (MM/YY):</label>
-            <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" required />
-            <span id="expiry-date-error" class="error-message"></span>
-          </div>
-      
-          <div class="form-group">
-            <label for="cvc">CVC:</label>
-            <input type="text" id="cvc" placeholder="123" maxlength="4" required />
-            <span id="cvc-error" class="error-message"></span>
-          </div>
-      
-          <button type="submit" class="cta-button">Update Payment</button>
-        </form>
-      </section>
-            
+      <form id="payment-form">
+        <h3>Payment Information:</h3>
+        <div class="form-group" id="card-element-container">
+          <label for="card-element">Card Details:</label>
+          <div id="card-element"></div> <!-- Stripe Card Element -->
+          <div id="card-errors" role="alert"></div> <!-- Error container -->
+        </div>
+        <button id="update-payment" type="submit" class="cta-button">Update Payment Method</button>
+      </form>
+                  
       <section id="billing-history">
         <h3>Billing History</h3>
         <ul>
@@ -143,19 +123,19 @@
         </div>
       </div>
 
-      <!-- Cancellation Reason Modal -->
-      <div id="cancel-reason-modal" class="modal hidden">
-        <div class="modal-content">
-          <span id="close-cancel-reason" class="close">&times;</span>
-          <h2>We're sorry to see you go!</h2>
-          <p>Please let us know why you are canceling:</p>
-          <form id="cancel-reason-form">
+        <!-- Cancel Reason Modal -->
+        <div id="cancel-reason-modal" class="modal hidden">
+            <div class="modal-content">
+            <h2>We're sorry to see you go!</h2>
+            <p>Please let us know why you are canceling:</p>
             <textarea id="cancel-reason" name="cancel-reason" rows="4" cols="50" placeholder="Your reason for canceling..."></textarea>
-            <button type="submit" class="cta-button">Submit</button>
-          </form>
+            <div class="modal-actions">
+                <button id="submit-reason" class="cta-button">Submit</button>
+                <button id="closeCancelReasonButton" class="cta-button">Close</button>
+            </div>
+            </div>
         </div>
-      </div>
-              </main>
+                </main>
 
   <footer>
     <p>&copy; 2025 PerfectPlate. Perfect dining, made just for you.</p>
@@ -166,7 +146,7 @@
 
   <script>
 // Email Update Submission
-document.getElementById('email-form').addEventListener('submit', (event) => {
+document.getElementById('email-form').addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const email = document.getElementById('email').value.trim();
@@ -176,7 +156,26 @@ document.getElementById('email-form').addEventListener('submit', (event) => {
     return;
   }
 
-  alert(`Email updated successfully to ${email}!`);
+  try {
+
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('http://localhost:5000/api/user/update-email', {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Include JWT in header
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) throw new Error('Failed to update email.');
+
+    alert('Email updated successfully!');
+  } catch (error) {
+    console.error(error);
+    alert('There was an error updating your email. Please try again.');
+  }
 });
 
 // Password Toggle Visibility
@@ -223,141 +222,202 @@ function validateConfirmPassword() {
 }
 
 // Password Update Submission
-document.getElementById('password-form').addEventListener('submit', (event) => {
+document.getElementById('password-form').addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const isPasswordValid = validatePassword();
-  const isConfirmPasswordValid = validateConfirmPassword();
+  const password = document.getElementById('password').value.trim();
+  const confirmPassword = document.getElementById('confirm-password').value.trim();
 
-  if (isPasswordValid && isConfirmPasswordValid) {
+  if (password !== confirmPassword) {
+    alert('Passwords do not match.');
+    return;
+  }
+
+  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/.test(password)) {
+    alert('Password must meet complexity requirements.');
+    return;
+  }
+
+  try {
+
+    const token = localStorage.getItem('token'); // Retrieve JWT from localStorage
+
+    const response = await fetch('http://localhost:5000/api/user/update-password', {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Include JWT in the header
+      },
+      body: JSON.stringify({ password }),
+    });
+
+    if (!response.ok) throw new Error('Failed to update password.');
+
     alert('Password updated successfully!');
-  } else {
-    alert('Please fix the errors before updating your password.');
+  } catch (error) {
+    console.error(error);
+    alert('There was an error updating your password. Please try again.');
   }
 });
 
-// Validate Credit Card Fields
-function validateCardFields() {
-  let isValid = true;
+// Initialize Stripe and Elements
+document.addEventListener('DOMContentLoaded', () => {
+  const stripe = Stripe('pk_test_51QhdtaFvH3kJIQY4d10LyKe9KA8nMhst62Oge1jThCJqFX0FCRkNhdRT6t1O7ptavhA8arUIgA2imh3ZBTnLuL6P00p19DUgu6'); // Replace with your test key
+  const elements = stripe.elements();
 
-  // Validate Name on Card
-  const cardName = document.getElementById('card-name').value.trim();
-  const cardNameError = document.getElementById('card-name-error');
-  if (cardName === '') {
-    cardNameError.textContent = 'Name on card is required.';
-    isValid = false;
-  } else {
-    cardNameError.textContent = '';
-  }
+  // Create the card element
+  const cardElement = elements.create('card', {
+    style: {
+      base: {
+        fontSize: '16px',
+        color: '#32325d',
+        '::placeholder': { color: '#aab7c4' },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    },
+  });
 
-  // Validate Card Number
-  const cardNumber = document.getElementById('card-number').value.replace(/\s+/g, '');
-  const cardNumberError = document.getElementById('card-number-error');
-  if (!/^\d{16}$/.test(cardNumber)) {
-    cardNumberError.textContent = 'Card number must be exactly 16 digits.';
-    isValid = false;
-  } else {
-    cardNumberError.textContent = '';
-  }
+  // Mount the card element
+  cardElement.mount('#card-element');
 
-  // Validate Expiry Date
-  const expiryDate = document.getElementById('expiry-date').value.trim();
-  const expiryDateError = document.getElementById('expiry-date-error');
-  if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
-    expiryDateError.textContent = 'Expiry date must be in MM/YY format.';
-    isValid = false;
-  } else {
-    expiryDateError.textContent = '';
-  }
+  // Handle card input errors
+  cardElement.on('change', (event) => {
+    const cardErrors = document.getElementById('card-errors');
+    cardErrors.textContent = event.error ? event.error.message : '';
+  });
 
-  // Validate CVC
-  const cvc = document.getElementById('cvc').value.trim();
-  const cvcError = document.getElementById('cvc-error');
-  if (!/^\d{3,4}$/.test(cvc)) {
-    cvcError.textContent = 'CVC must be 3 or 4 digits.';
-    isValid = false;
-  } else {
-    cvcError.textContent = '';
-  }
+  // Handle Payment Form Submission
+  const form = document.getElementById('payment-form');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-  return isValid;
-}
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: { email: document.getElementById('email').value },
+    });
 
-// Handle Payment Form Submission
-document.getElementById('payment-form').addEventListener('submit', (event) => {
-  event.preventDefault();
+    if (error) {
+      document.getElementById('card-errors').textContent = error.message;
+    } else {
+      try {
+        const userId = localStorage.getItem('userId');  // Retrieve stored userId
+        const response = await fetch('http://localhost:5000/api/payment/update-payment-method', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            userId: localStorage.getItem('userId'), // Include userId if necessary
+            paymentMethodId: paymentMethod.id 
+        }),
+        });
 
-  if (validateCardFields()) {
-    alert('Payment method updated successfully!');
-  } else {
-    alert('Please correct the errors before updating your payment method.');
-  }
+        if (!response.ok) throw new Error('Failed to update payment information.');
+
+        alert('Payment method updated successfully!');
+      } catch (error) {
+        console.error(error);
+        alert('There was an error updating your payment method. Please try again.');
+      }
+    }
+  });
 });
 
 // Modal Elements
 const cancelButton = document.getElementById('cancel-subscription');
 const cancelModal = document.getElementById('cancel-modal');
+const cancelReasonModal = document.getElementById('cancel-reason-modal');
 const confirmCancelButton = document.getElementById('confirm-cancel');
 const closeModalButton = document.getElementById('close-modal');
-const cancelReasonModal = document.getElementById('cancel-reason-modal');
-const closeCancelReasonButton = document.getElementById('close-cancel-reason');
+const closeReasonModalButton = document.getElementById('closeCancelReasonButton'); // Corrected ID
+const submitReasonButton = document.getElementById('submit-reason');
 
-// Show Modal on Cancel Button Click
+// Open Confirmation Modal
 cancelButton.addEventListener('click', () => {
   cancelModal.classList.remove('hidden');
 });
 
-// Close Modal on Never Mind Button Click
+// Close Confirmation Modal
 closeModalButton.addEventListener('click', () => {
   cancelModal.classList.add('hidden');
 });
 
-// Confirm Cancel Subscription
+// Open Reason Modal
 confirmCancelButton.addEventListener('click', () => {
-  // Close the cancellation confirmation modal
-  cancelModal.classList.add('hidden');
-
-  // Open the reason modal
-  cancelReasonModal.classList.remove('hidden');
+  cancelModal.classList.add('hidden'); // Hide confirmation modal
+  cancelReasonModal.classList.remove('hidden'); // Show reason modal
 });
 
+// Close Reason Modal
+closeReasonModalButton.addEventListener('click', () => {
+  cancelReasonModal.classList.add('hidden');
+});
+
+// Handle Reason Submission
+submitReasonButton.addEventListener('click', async () => {
+  const reason = document.getElementById('cancel-reason').value.trim();
+  const email = localStorage.getItem('email');
+
+  if (!reason) {
+    alert('Please provide a reason for cancellation.');
+    return;
+  }
+
+  if (!email) {
+    alert('No user email found. Please log in again.');
+    return;
+  }
+
+  try {
+    console.log('Submitting cancellation reason:', { email, reason }); // Debugging
+    const response = await fetch('http://localhost:5000/api/subscription/cancel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, reason }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to cancel subscription.');
+    }
+
+    alert('Subscription successfully canceled.');
+    location.href = './account-closed.html'; // Redirect on success
+  } catch (error) {
+    console.error('Error canceling subscription:', error.message);
+    alert('There was an issue canceling your subscription. Please try again.');
+  }
+});
+
+// Handle Modal Close
 closeCancelReasonButton.addEventListener('click', () => {
   cancelReasonModal.classList.add('hidden');
 });
 
-document.getElementById('cancel-reason-form').addEventListener('submit', function (event) {
+document.getElementById('notification-form').addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const reason = document.getElementById('cancel-reason').value;
+  const emailNotifications = document.getElementById('email-notifications').checked;
+  const pushNotifications = document.getElementById('push-notifications').checked;
 
-  // Send the email using a backend service
-  fetch('http://localhost:3000/send-email', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      to: 'perfectplateai@gmail.com',
-      subject: 'Cancellation Reason',
-      text: `Reason for cancellation: ${reason}`
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      alert('Thank you for your feedback. Your response has been sent.');
-    } else {
-      alert('There was an error sending your response. Please try again later.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('There was an error sending your response. Please try again later.');
-  });
+  try {
+    const response = await fetch('http://localhost:5000/api/user/update-notifications', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ emailNotifications, pushNotifications }),
+    });
 
-  // Close the reason modal
-  cancelReasonModal.classList.add('hidden');
+    if (!response.ok) throw new Error('Failed to update preferences.');
+
+    alert('Notification preferences updated successfully!');
+  } catch (error) {
+    console.error(error);
+    alert('There was an error updating your preferences. Please try again.');
+  }
 });
+
   </script>
 </body>
 </html>

@@ -149,7 +149,7 @@ input.valid {
 }
 
 .cta-button:hover {
-  background-color: #66bb6a; /* Slightly darker green on hover */
+  background-color: #ff4a3d; /* Slightly darker green on hover */
   color: white;
 }
 
@@ -591,6 +591,16 @@ input[type="password"] {
   line-height: normal; /* Prevent inherited line-height issues */
 }
 
+/* Greyscale filter for show password buttons */
+.toggle-password {
+  filter: grayscale(100%) brightness(150%);
+  cursor: pointer;
+}
+
+.toggle-password:hover {
+  filter: none; /* Remove greyscale on hover */
+}
+
 .toggle-password {
   position: absolute;
   right: 10px;
@@ -613,15 +623,48 @@ input[type="password"] {
   margin-bottom: 20px;
 }
 
-.payment-options-group .form-group {
+/* Ensure the card element container has proper size and visibility */
+#signup {
+  display: block;
+  position: relative;
   width: 100%;
-  max-width: 400px; /* Ensure consistent width */
-  display: flex;
-  justify-content: center; /* Center the form group */
+  max-width: 600px; /* Adjust to fit your design */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
 }
 
-.payment-options-group .form-group input {
-  width: 100%; /* Ensure input fields take full width */
+#card-element-container {
+  display: flex; /* Ensure the container is displayed properly */
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#card-element {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #32325d;
+  width: 100%;
+  box-sizing: border-box;
+}
+.__PrivateStripeElement iframe {
+  width: 100% !important;
+  height: 40px !important;
+  background: transparent;
+}
+
+#card-element iframe {
+  pointer-events: auto !important; /* Ensure the iframe is interactive */
+}
+
+#card-errors {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 .form-group label {
@@ -933,6 +976,18 @@ a.cta-button:hover:not(.disabled) {
   background-color: #ccc;
 }
 
+/* Remove Hover Effect for Active Start Free Trial Button */
+#signup #submitButton:not(.disabled):hover {
+  background-color: #ff4a3d; /* Keep the default background color */
+  color: white; /* Ensure consistent text color */
+}
+
+/* Maintain Disabled State Hover Effect */
+#signup #submitButton.disabled:hover {
+  background-color: #ccc; /* Disabled gray background */
+  cursor: not-allowed;
+}
+
 /* Modal Overlay */
 .modal {
   position: fixed;
@@ -1087,6 +1142,9 @@ footer {
   opacity: 0.9;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   text-align: center;
+  position: relative; /* Changed from relative */
+  bottom: 0;
+  width: 100%; /* Ensures the footer spans the full width */
 }
 
 .button {
