@@ -145,6 +145,14 @@
   </footer>
 
   <script>
+
+const isLocalhost = window.location.hostname === 'localhost';
+
+// 2) Decide which backend URL to use:
+const API_BASE_URL = isLocalhost
+  ? 'http://localhost:5000'  // local dev
+  : 'https://perfectplate-backend.onrender.com';  // your deployed backend
+
 // Email Update Submission
 document.getElementById('email-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -160,7 +168,7 @@ document.getElementById('email-form').addEventListener('submit', async (event) =
 
     const token = localStorage.getItem('token');
 
-    const response = await fetch('http://localhost:5000/api/user/update-email', {
+    const response = await fetch(`${API_BASE_URL}/api/user/update-email`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -242,7 +250,7 @@ document.getElementById('password-form').addEventListener('submit', async (event
 
     const token = localStorage.getItem('token'); // Retrieve JWT from localStorage
 
-    const response = await fetch('http://localhost:5000/api/user/update-password', {
+    const response = await fetch(`${API_BASE_URL}/api/user/update-password`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -305,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       try {
         const userId = localStorage.getItem('userId');  // Retrieve stored userId
-        const response = await fetch('http://localhost:5000/api/payment/update-payment-method', {
+        const response = await fetch(`${API_BASE_URL}/api/payment/update-payment-method`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
@@ -372,7 +380,7 @@ submitReasonButton.addEventListener('click', async () => {
 
   try {
     console.log('Submitting cancellation reason:', { email, reason }); // Debugging
-    const response = await fetch('http://localhost:5000/api/subscription/cancel', {
+    const response = await fetch(`${API_BASE_URL}/api/subscription/cancel`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, reason }),
@@ -403,7 +411,7 @@ document.getElementById('notification-form').addEventListener('submit', async (e
   const pushNotifications = document.getElementById('push-notifications').checked;
 
   try {
-    const response = await fetch('http://localhost:5000/api/user/update-notifications', {
+    const response = await fetch(`${API_BASE_URL}/api/user/update-notifications`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ emailNotifications, pushNotifications }),

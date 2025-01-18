@@ -143,6 +143,14 @@
   </footer>
 
   <script>
+
+    const isLocalhost = window.location.hostname === 'localhost';
+
+    // 2) Decide which backend URL to use:
+    const API_BASE_URL = isLocalhost
+      ? 'http://localhost:5000'  // local dev
+      : 'https://perfectplate-backend.onrender.com';  // your deployed backend
+
     const formState = {
       email: false,
       password: false,
@@ -301,7 +309,7 @@
           }
   
           const amount = subscriptionType === 'monthly' ? 799 : 7299;
-          const paymentResponse = await fetch('http://localhost:5000/api/payment/checkout', {
+          const paymentResponse = await fetch(`${API_BASE_URL}/api/payment/checkout`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, amount, paymentMethodId: paymentMethod.id }),
@@ -311,7 +319,7 @@
             throw new Error(paymentErrorData.error || 'Payment failed.');
           }
   
-          const signupResponse = await fetch('http://localhost:5000/api/auth/signup', {
+          const signupResponse = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password, subscriptionType }),
@@ -324,8 +332,8 @@
           console.log('Signup response:', responseData);
           localStorage.setItem('customerId', responseData.customerId);
           localStorage.setItem('email', email);
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('userId', data.userId);  // Make sure backend sends this if necessary
+          localStorage.setItem('token', responseData.token);
+          localStorage.setItem('userId', responseData.userId);
           document.getElementById('signup').style.display = 'none';
           document.getElementById('confirmation').style.display = 'block';
         } catch (err) {

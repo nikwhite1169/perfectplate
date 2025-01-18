@@ -10,6 +10,9 @@ menuwise-ads.rar
 /.history/
 /website/
 
+/perfectplate-backend/
+/android-ios/
+
 # Allow pertinent website files
 !.gitignore
 !index.html

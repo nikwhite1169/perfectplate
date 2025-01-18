@@ -76,6 +76,13 @@
   </footer>
 
   <script>
+    const isLocalhost = window.location.hostname === 'localhost';
+
+// 2) Decide which backend URL to use:
+    const API_BASE_URL = isLocalhost
+  ? 'http://localhost:5000'  // local dev
+  : 'https://perfectplate-backend.onrender.com';  // your deployed backend
+
     // Password Toggle Visibility
     document.querySelectorAll('.toggle-password').forEach((toggle) => {
       toggle.addEventListener('click', () => {
@@ -104,7 +111,7 @@
 
   try {
     // Send login data to backend
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
